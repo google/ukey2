@@ -3,7 +3,7 @@ This is not an officially supported Google product
 
 **Written by:** Alexei Czeskis
 
-**Status:** Implemented in Java (aczeskis@)
+**Status:** Implemented in Java (aczeskis@google.com)
 
 **Design reviewers:** Bruno Blanchet, Martin Abadi, and Bo Wang
 
@@ -13,7 +13,7 @@ This is not an officially supported Google product
 
 
 
-# Overview {#overview}
+# Overview
 
 UKEY2 is a Diffie-Hellman based authenticated key exchange protocol.
 
@@ -29,7 +29,7 @@ transmit passwords or other credentials. It is especially useful when one wants 
  new device to a password-protected WIFI network.  UKEY2 is also usable over low-bandwidth
 transports like Bluetooth Low Energy (see [Performance](#performance)).
 
-# Message Framing {#message-framing}
+# Message Framing
 
 Each UKEY2 message is framed inside an outer protobuf message:
 
@@ -52,7 +52,7 @@ message Ukey2Message {
 
 
 
-# Alerts {#alerts}
+# Alerts
 
 In case an error occurs, the client and server will reply with an Alert:
 
@@ -93,7 +93,7 @@ fatal. Upon receiving an `Alert`, clients and servers must close the connection,
 cannot parse the `Alert`.  The `Alert` message may contain an optional `error_message` string
 that may be used to describe error details for logging.
 
-# Handshake Ciphersuites {#handshake-ciphersuites}
+# Handshake Ciphersuites
 
 UKEY2 supports negotiation of the cryptographic primitives used in the handshake. Two primitives
 are required, a Diffie-Hellman function and a cryptographic hash function, which are represented
@@ -116,7 +116,7 @@ handshake ciphersuite negotiation is (see ClientInit and ServerInit messages for
 *   The server replies with a public key using the chosen cipher and sends its own list of supported handshake cipher suites so that the client can verify that the right selection was made.
 
 
-# Handshake Details {#handshake-details}
+# Handshake Details
 
 The UKEY2 handshake consists of three messages. First, the client sends a `ClientInit` message to
 the server -- conceptually, this consists of a list of cipher suites and a commitment to an
@@ -129,7 +129,7 @@ After the handshake, both client and server derive authentication strings, which
 users for visual comparison or sent over some other channel in order to authenticate the handshake.
 The client and server also derive session keys for the next protocol.
 
-## The `ClientInit` Message {#the-clientinit-message}
+## The `ClientInit` Message
 
 The `ClientInit` message is defined as follows:
 
@@ -155,7 +155,7 @@ message Ukey2ClientInit {
 The `version` field is the maximum version that the client supports.  It should be 1 for now. The `random` field is exactly 32 cryptographically secure random bytes.  The `cipher_commitment` field is a protobuf consisting of a handshake cipher and a commitment which is a hash of the `ClientFinished` message that would be sent if the cipher were selected (the serialized, including framing, raw bytes of the last handshake message sent by the client), calculated with the hash function and the Diffie-Hellman function from the handshake cipher. The client includes each commitment in the order of their preference.  Note that only one commitment per `handshake_cipher` is allowed.  The client also includes the `next_protocol` field that specifies that the client wants to use to speak to the server.  Note that this protocol must implicitly imply a key length.  UKEY2, however, does not provide a namespace for the `next_protocol` values in order to provide layers separation between the handshake and the next protocols.
 
 
-## Interpreting `ClientInit` {#interpreting-clientinit}
+## Interpreting `ClientInit`
 
 Upon receiving the `ClientInit` message, the server should:
 
@@ -172,7 +172,7 @@ Upon receiving the `ClientInit` message, the server should:
 If no alerts have been sent, the server replies with the `ServerInit` message.
 
 
-## The `ServerInit` Message {#the-serverinit-message}
+## The `ServerInit` Message 
 
 The `ServerInit` message is as follows
 
@@ -194,7 +194,7 @@ bytes.  The `handshake_cipher` field contains the server-chosen `HandshakeCipher
 `public_key` field contains the server-chosen corresponding public key.
 
 
-## Interpreting `ServerInit` {#interpreting-serverinit}
+## Interpreting `ServerInit`
 
 When a client receives a `ServerInit` after having sent a `ClientInit`, it performs the following actions:
 
@@ -217,7 +217,7 @@ the next-protocol secret `NEXT_SECRET` (see below).  The client should use an ou
 channel to verify the authentication string before proceeding to the next protocol.
 
 
-## The ClientFinished Message {#the-clientfinished-message}
+## The ClientFinished Message 
 
 The `ClientFinished` message is as follows:
 
@@ -233,7 +233,7 @@ The `public_key` contains the Client's public key (whose commitment was sent in 
 message) for the server-selected handshake cipher.
 
 
-## Interpreting ClientFinished {#interpreting-clientfinished}
+## Interpreting ClientFinished 
 
 When a server receives a `ClientFinished` after having sent a `ServerInit`, it performs the
 following actions:
@@ -256,7 +256,6 @@ verify the authentication string before proceeding to the next protocol.
 
 
 # Deriving the Authentication String and the Next-Protocol Secret
-{#deriving-the-authentication-string-and-the-next-protocol-secret}
 
 Let `DHS` = the negotiated Diffie-Hellman key derived from the Client and Server public keys.
 
@@ -285,7 +284,7 @@ Then `AUTH_STRING = HKDF-Expand(PRK_AUTH, M_1|M_2, L_auth)`
 Then `NEXT_SECRET = HKDF-Expand(PRK_NEXT, M_1|M_2, L_next)`
 
 
-# Security Discussion {#security-discussion}
+# Security Discussion
 
 If client and server authenticate one-another using the `AUTH_STRING` through an out-of-band
 mechanism, we believe that this handshake is resistant to an active man-in-the-middle attacker.
@@ -312,7 +311,7 @@ authentication; UKEY2 provides both.  Second, the paper does not give concrete p
 instead describing abstract functions such as `commit() `and `open()`.  One concrete
 implementation of these functions would look similar to what UKEY2 does.
 
-# Performance {#performance}
+# Performance
 
 The messages are fairly compact.  Running a test where the client sent a single commitment for a
 `P256_SHA512` cipher and the `next_protocol` was set to "`AES_256_CBC-HMAC_SHA256"`, the total
