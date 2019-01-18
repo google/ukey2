@@ -2,7 +2,7 @@
 This is not an officially supported Google product
 
 **Coathored by:** Alexei Czeskis, Thai Duong, Eduardo' Vela'' \<Nava\>, and Adam Stubblefield.
- 
+
 **Status:** Implemented in Java (aczeskis@google.com)
 
 **Design reviewers:** Thai Duong, Bruno Blanchet, Martin Abadi, and Bo Wang
