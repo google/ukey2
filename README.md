@@ -1,10 +1,7 @@
 # Ukey2
 This is not an officially supported Google product
 
-**Written by:** Alexei Czeskis
-
-**Acknowledgements:** Based on earlier work by Thai Doung (`UKEY1`) which was evaluated and improved by 
- Eduardo' Vela" <Nava>. The key exchange was shamelessly copied from Adam Stubblefield's `REKE` work.
+**Coathored by:** Alexei Czeskis, Thai Doung, Eduardo' Vela'' \<Nava\>, and Adam Stubblefield.
  
 **Status:** Implemented in Java (aczeskis@google.com)
 
