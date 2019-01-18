@@ -1,11 +1,11 @@
 # Ukey2
 This is not an officially supported Google product
 
-**Written by:** Alexei Czeskis
+**Coathored by:** Alexei Czeskis, Thai Duong, Eduardo' Vela'' \<Nava\>, and Adam Stubblefield.
 
 **Status:** Implemented in Java (aczeskis@google.com)
 
-**Design reviewers:** Bruno Blanchet, Martin Abadi, and Bo Wang
+**Design reviewers:** Thai Duong, Bruno Blanchet, Martin Abadi, and Bo Wang
 
 **Implementation reviewer**: Thai Duong
 
