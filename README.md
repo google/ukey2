@@ -3,9 +3,12 @@ This is not an officially supported Google product
 
 **Written by:** Alexei Czeskis
 
+**Acknowledgements:** Based on earlier work by Thai Doung (`UKEY1`) which was evaluated and improved by 
+ Eduardo' Vela" <Nava>. The key exchange was shamelessly copied from Adam Stubblefield's `REKE` work.
+ 
 **Status:** Implemented in Java (aczeskis@google.com)
 
-**Design reviewers:** Bruno Blanchet, Martin Abadi, and Bo Wang
+**Design reviewers:** Thai Doung, Bruno Blanchet, Martin Abadi, and Bo Wang
 
 **Implementation reviewer**: Thai Duong
 
