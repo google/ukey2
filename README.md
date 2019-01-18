@@ -311,6 +311,8 @@ authentication; UKEY2 provides both.  Second, the paper does not give concrete p
 instead describing abstract functions such as `commit() `and `open()`.  One concrete
 implementation of these functions would look similar to what UKEY2 does.
 
+Bruno Blanchet performed a formal proof of a simplified version of UKEY2.
+
 # Performance
 
 The messages are fairly compact.  Running a test where the client sent a single commitment for a
