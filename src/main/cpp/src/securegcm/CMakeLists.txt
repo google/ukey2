@@ -31,3 +31,17 @@ target_link_libraries(ukey2
     proto_ukey_cc_proto
     securemessage
 )
+
+add_executable(ukey2_shell
+  ukey2_shell.cc
+)
+
+target_link_libraries(ukey2_shell
+  PUBLIC
+    securemessage
+    ukey2
+    absl::base
+    absl::container
+    absl::flags
+    absl::flags_parse
+)

@@ -34,16 +34,18 @@
 // will have the following simple format:
 //   [ length | bytes ]
 // where |length| is a 4 byte big-endian encoded unsigned integer.
+#include <cassert>
 #include <cstdio>
 #include <iostream>
 #include <memory>
 
-#include "base/commandlineflags.h"
-#include "base/init_google.h"
-#include "base/logging.h"
 #include "securegcm/ukey2_handshake.h"
 #include "absl/container/fixed_array.h"
 #include "absl/flags/flag.h"
+#include "absl/flags/parse.h"
+
+#define LOG(ERROR) std::cerr
+#define CHECK_EQ(a, b) do { if ((a) != (b)) abort(); } while(0)
 
 ABSL_FLAG(
     int, verification_string_length, 32,
@@ -270,7 +272,7 @@ bool UKey2Shell::RunAsResponder() {
 }  // namespace securegcm
 
 int main(int argc, char** argv) {
-  InitGoogle(argv[0], &argc, &argv, true /* remove_flags */);
+  absl::ParseCommandLine(argc, argv);
 
   const int verification_string_length =
       absl::GetFlag(FLAGS_verification_string_length);

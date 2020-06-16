@@ -19,11 +19,22 @@ project(ukey2)
 option(ukey2_USE_LOCAL_PROTOBUF
        "Use local copy of protobuf library and compiler" OFF)
 
+option(ukey2_USE_LOCAL_ABSL
+       "Use local copy of abseil-cpp library" OFF)
+
 include(cmake/proto_defs.cmake)
 include(cmake/local_build_setup.cmake)
 
 if (ukey2_USE_LOCAL_PROTOBUF)
   include(cmake/local_build_protobuf.cmake)
+endif()
+
+if (ukey2_USE_LOCAL_ABSL)
+  if (NOT TARGET absl::base)
+    add_subdirectory(third_party/absl)
+  endif()
+else()
+  find_package(absl REQUIRED)
 endif()
 
 find_package(Protobuf REQUIRED)
