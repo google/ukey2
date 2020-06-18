@@ -1,21 +1,8 @@
-/* Copyright 2018 Google LLC
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
 syntax = "proto2";
 
 package securegcm;
 
+option optimize_for = LITE_RUNTIME;
 option java_package = "com.google.security.cryptauth.lib.securegcm";
 option java_outer_classname = "SecureGcmProto";
 option objc_class_prefix = "SGCM";
@@ -36,7 +23,7 @@ message GcmDeviceInfo {
   optional bytes apn_registration_id = 202;
 
   // Does the user have notifications enabled for the given device address.
-  optional bool notification_enabled = 203 [ default = true ];
+  optional bool notification_enabled = 203 [default = true];
 
   // Used for device_address of DeviceInfo field 2, a Bluetooth Mac address for
   // the device (e.g., to be used with EasyUnlock)
@@ -104,45 +91,45 @@ message GcmDeviceInfo {
   optional string device_manufacturer = 31;
 
   // Used to indicate which type of device this is.
-  optional DeviceType device_type = 32 [ default = ANDROID ];
+  optional DeviceType device_type = 32 [default = ANDROID];
 
   // Fields corresponding to screenlock type/features and hardware features
   // should be numbered in the 400 range.
 
   // Is this device using  a secure screenlock (e.g., pattern or pin unlock)
-  optional bool using_secure_screenlock = 400 [ default = false ];
+  optional bool using_secure_screenlock = 400 [default = false];
 
   // Is auto-unlocking the screenlock (e.g., when at "home") supported?
-  optional bool auto_unlock_screenlock_supported = 401 [ default = false ];
+  optional bool auto_unlock_screenlock_supported = 401 [default = false];
 
   // Is auto-unlocking the screenlock (e.g., when at "home") enabled?
-  optional bool auto_unlock_screenlock_enabled = 402 [ default = false ];
+  optional bool auto_unlock_screenlock_enabled = 402 [default = false];
 
   // Does the device have a Bluetooth (classic) radio?
-  optional bool bluetooth_radio_supported = 403 [ default = false ];
+  optional bool bluetooth_radio_supported = 403 [default = false];
 
   // Is the Bluetooth (classic) radio on?
-  optional bool bluetooth_radio_enabled = 404 [ default = false ];
+  optional bool bluetooth_radio_enabled = 404 [default = false];
 
   // Does the device hardware support a mobile data connection?
-  optional bool mobile_data_supported = 405 [ default = false ];
+  optional bool mobile_data_supported = 405 [default = false];
 
   // Does the device support tethering?
-  optional bool tethering_supported = 406 [ default = false ];
+  optional bool tethering_supported = 406 [default = false];
 
   // Does the device have a BLE radio?
-  optional bool ble_radio_supported = 407 [ default = false ];
+  optional bool ble_radio_supported = 407 [default = false];
 
   // Is the device a "Pixel Experience" Android device?
-  optional bool pixel_experience = 408 [ default = false ];
+  optional bool pixel_experience = 408 [default = false];
 
   // Is the device running in the ARC++ container on a chromebook?
-  optional bool arc_plus_plus = 409 [ default = false ];
+  optional bool arc_plus_plus = 409 [default = false];
 
   // Is the value set in |using_secure_screenlock| reliable? On some Android
   // devices, the platform API to get the screenlock state is not trustworthy.
   // See b/32212161.
-  optional bool is_screenlock_state_flaky = 410 [ default = false ];
+  optional bool is_screenlock_state_flaky = 410 [default = false];
 
   // A list of multi-device software features supported by the device.
   repeated SoftwareFeature supported_software_features = 411;
@@ -178,7 +165,7 @@ enum DeviceType {
   OSX = 5;
 }
 
-// MultiDevice features which may be supported and enabled on a device.
+// MultiDevice features which may be supported and enabled on a device. See
 enum SoftwareFeature {
   UNKNOWN_FEATURE = 0;
   BETTER_TOGETHER_HOST = 1;

@@ -1,19 +1,20 @@
-/* Copyright 2018 Google LLC
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
+// Copyright 2020 Google LLC
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     https://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
 package com.google.security.cryptauth.lib.securemessage;
 
+import com.google.common.collect.Lists;
 import com.google.protobuf.ByteString;
 import com.google.security.annotations.SuppressInsecureCipherModeCheckerPendingReview;
 import com.google.security.cryptauth.lib.securemessage.SecureMessageProto.DhPublicKey;
@@ -191,6 +192,37 @@ public class PublicKeyProtoUtil {
           .build();
     }
     throw new IllegalArgumentException("Unsupported PublicKey type");
+  }
+
+  /**
+   * Encodes an {@link ECPublicKey} to an {@link GenericPublicKey} proto message. The returned key
+   * has a null-byte padded to the front in order to match the C++ implementation.
+   */
+  public static GenericPublicKey encodePaddedEcPublicKey(PublicKey pk) {
+    if (pk == null) {
+      throw new NullPointerException();
+    }
+    if (!(pk instanceof ECPublicKey)) {
+      throw new IllegalArgumentException("Expected ECPublicKey PublicKey type");
+    }
+
+    ECPublicKey epk = pkToECPublicKey(pk);
+    ByteString nullByteString = ByteString.copyFrom(new byte[] {0});
+    ByteString xByteString = extractX(epk);
+    if (xByteString.size() < MAX_P256_ENCODING_BYTES) {
+      xByteString = ByteString.copyFrom(Lists.newArrayList(nullByteString, xByteString));
+    }
+    ByteString yByteString = extractY(epk);
+    if (yByteString.size() < MAX_P256_ENCODING_BYTES) {
+      yByteString = ByteString.copyFrom(Lists.newArrayList(nullByteString, yByteString));
+    }
+    EcP256PublicKey newKey =
+        EcP256PublicKey.newBuilder().setX(xByteString).setY(yByteString).build();
+
+    return GenericPublicKey.newBuilder()
+        .setType(SecureMessageProto.PublicKeyType.EC_P256)
+        .setEcP256PublicKey(newKey)
+        .build();
   }
 
   /**

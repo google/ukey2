@@ -1,24 +1,23 @@
-/* Copyright 2018 Google LLC
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
+// Copyright 2020 Google LLC
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     https://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
 package com.google.security.cryptauth.lib.securegcm;
 
 import static java.math.BigInteger.ONE;
 import static java.math.BigInteger.ZERO;
 
 import com.google.common.annotations.VisibleForTesting;
-
 import java.math.BigInteger;
 
 /**
@@ -208,20 +207,20 @@ public class Ed25519 {
     };
   }
 
-  /**
-   * Converts a point in affine representation to extended representation
-   */
-  @VisibleForTesting
+  /** Converts a point in affine representation to extended representation */
+  // TODO(b/120887495): This @VisibleForTesting annotation was being ignored by prod code.
+  // Please check that removing it is correct, and remove this comment along with it.
+  // @VisibleForTesting
   static BigInteger[] toExtended(BigInteger[] p) throws Ed25519Exception {
     checkPointIsInAffineRepresentation(p);
 
     return new BigInteger[] {p[X], p[Y], ONE, p[X].multiply(p[Y]).mod(Ed25519_P)}; // x, y, 1, x*y
   }
 
-  /**
-   * Converts a point in extended representation to affine representation
-   */
-  @VisibleForTesting
+  /** Converts a point in extended representation to affine representation */
+  // TODO(b/120887495): This @VisibleForTesting annotation was being ignored by prod code.
+  // Please check that removing it is correct, and remove this comment along with it.
+  // @VisibleForTesting
   static BigInteger[] toAffine(BigInteger[] p) throws Ed25519Exception {
     checkPointIsInExtendedRepresentation(p);
 

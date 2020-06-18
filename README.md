@@ -327,3 +327,44 @@ size of the messages were:
 |`ClientFinished`| 79              |
 
 
+# Checking out source code
+
+```
+git clone https://github.com/google/ukey2
+cd ukey2
+git submodule update --init --recursive
+```
+
+## Buillding Java library and run Java Tests
+Pre-reqs: gradle
+
+1. Create gradle wrapper for a specific gradle version.
+This project was built with Gradle-6.1.1.
+If you have an incompatible version of gradle it is recommended that
+you setup gradle wrapper first.
+1.1. The simplest is to run
+```
+cd <source root>
+gradle wrapper --gradle-version=6.1.1
+
+```
+
+1.2. If this fails, this is likely because current gradle version is unable to parse the build.gradle
+file. In this case, create an empty directory outside your project tree, and create a wrapper there.
+```
+mkdir -p $HOME/scratch/gradle-wrapper-611
+cd $HOME/scratch/gradle-wrapper-611
+gradle wrapper --gradle-version=6.1.1
+cp -a gradle gradlew gradlew.bat <source root>
+```
+
+2. Once you get gradle wrapper installed, run test command
+
+```
+cd <source root>
+./gradlew test -i
+```
+
+This will build and execute all the tests.
+They are expected to pass, except for the c++ interworking tests which are expected to fail because
+c++ library is missing in this PR.
