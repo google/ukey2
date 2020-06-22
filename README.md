@@ -3,7 +3,9 @@ This is not an officially supported Google product
 
 **Coathored by:** Alexei Czeskis, Thai Duong, Eduardo' Vela'' \<Nava\>, and Adam Stubblefield.
 
-**Status:** Implemented in Java (aczeskis@google.com)
+**Status:**
+Implemented in Java by Alexei Czeskis (aczeskis@google.com)
+Ported from Java to C++ by Tim Song (tengs@google.com)
 
 **Design reviewers:** Thai Duong, Bruno Blanchet, Martin Abadi, and Bo Wang
 
@@ -335,7 +337,29 @@ cd ukey2
 git submodule update --init --recursive
 ```
 
-## Buillding Java library and run Java Tests
+# Building and tesging C++ code
+
+## Build
+```
+cd <source root>
+mkdir build; cd build
+cmake -Dukey2_USE_LOCAL_PROTOBUF=ON -Dukey2_USE_LOCAL_ABSL=ON ..
+make
+```
+## Running C++ tests
+```
+cd <source root>/build
+ctest -V
+```
+
+# Buillding Java library and running Java Tests
+
+NOTE: c++ build must be completed as described above, before running java tests.
+This requirement exists because Java build runs a c++/java compatibility test, and
+this test depends on c++ test helper binary (found in build/src/main/cpp/test/securegcm/ukey2_test).
+Gradle build does not know how to build this artifact. Java test uses a relative
+path to the artifact, and expects tests to be run from <source root> as follows:
+
 Pre-reqs: gradle
 
 1. Create gradle wrapper for a specific gradle version.
@@ -366,5 +390,3 @@ cd <source root>
 ```
 
 This will build and execute all the tests.
-They are expected to pass, except for the c++ interworking tests which are expected to fail because
-c++ library is missing in this PR.
