@@ -2,22 +2,44 @@ apply plugin: 'java'
 apply plugin: 'com.google.protobuf'
 
 repositories {
-    jcenter()
+    mavenCentral()
 }
 
 buildscript {
   repositories {
-    jcenter()
+    mavenCentral()
   }
   dependencies {
-    classpath 'com.google.protobuf:protobuf-gradle-plugin:0.8.7'
+    classpath 'com.google.protobuf:protobuf-gradle-plugin:0.8.12'
   }
 }
 
 dependencies {
+    compile group: 'com.google.truth.extensions', name: 'truth-java8-extension', version: '0.41'
+    testCompile group: 'com.google.guava', name: 'guava-testlib', version: '29.0-jre'
+    testImplementation 'junit:junit:4.13'
     compile  "com.google.code.findbugs:jsr305:3.0.0"
-    compile "com.google.protobuf:protobuf-java:3.4.0"
-    compile "com.google.guava:guava:r05"
+    compile "com.google.protobuf:protobuf-java:3.8.0"
+    compile "com.google.guava:guava:19.0"
 }
 
+sourceSets {
+    main {
+        java {
+            srcDir 'src/main/java'
+            srcDir 'build/generated/source/proto/main/java'
+        }
+    }
+    test {
+        java {
+            srcDir 'src/main/javatest'
+            srcDir 'build/generated/source/proto/main/java'
+        }
+    }
+}
 
+test {
+    useJUnit()
+
+    maxHeapSize = '1G'
+}

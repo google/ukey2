@@ -1,17 +1,17 @@
-/* Copyright 2018 Google LLC
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
+// Copyright 2020 Google LLC
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     https://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
 package com.google.security.cryptauth.lib.securegcm;
 
 import com.google.common.annotations.VisibleForTesting;
@@ -54,6 +54,11 @@ class D2DCryptoOps {
     (byte) 0x1D, (byte) 0x4A, (byte) 0xB3, (byte) 0x83, (byte) 0x76, (byte) 0xB8, (byte) 0x25,
     (byte) 0x6D, (byte) 0xA8, (byte) 0x55, (byte) 0x10
   };
+
+  // Data passed to hkdf to create the key used by the initiator to encode messages.
+  static final String INITIATOR_PURPOSE = "initiator";
+  // Data passed to hkdf to create the key used by the responder to encode messages.
+  static final String RESPONDER_PURPOSE = "responder";
 
   // Don't instantiate
   private D2DCryptoOps() { }
@@ -196,7 +201,7 @@ class D2DCryptoOps {
 
   /**
    * Used to derive a distinct key for each initiator and responder.
-   * 
+   *
    * @param masterKey the source key used to derive the new key.
    * @param purpose a string to make the new key different for each purpose.
    * @return the derived {@link SecretKey}.
