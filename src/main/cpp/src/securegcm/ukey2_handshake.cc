@@ -97,20 +97,20 @@ UKey2Handshake::State UKey2Handshake::GetHandshakeState() const {
     case InternalState::SERVER_AFTER_CLIENT_INIT:
     case InternalState::SERVER_WAITING_FOR_CLIENT_FINISHED:
       // Fallthrough intended -- these are all in-progress states.
-      return State::IN_PROGRESS;
+      return State::kInProgress;
     case InternalState::HANDSHAKE_VERIFICATION_NEEDED:
-      return State::VERIFICATION_NEEDED;
+      return State::kVerificationNeeded;
     case InternalState::HANDSHAKE_VERIFICATION_IN_PROGRESS:
-      return State::VERIFICATION_IN_PROGRESS;
+      return State::kVerificationInProgress;
     case InternalState::HANDSHAKE_FINISHED:
-      return State::FINISHED;
+      return State::kFinished;
     case InternalState::HANDSHAKE_ALREADY_USED:
-      return State::ALREADY_USED;
+      return State::kAlreadyUsed;
     case InternalState::HANDSHAKE_ERROR:
-      return State::ERROR;
+      return State::kError;
     default:
       // Unreachable.
-      return State::ERROR;
+      return State::kError;
   }
 }
 

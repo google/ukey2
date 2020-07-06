@@ -33,39 +33,39 @@ namespace securegcm {
 class UKey2Handshake {
  public:
   // Handshake states:
-  //   IN_PROGRESS:
+  //   kInProgress:
   //       The handshake is in progress, caller should use
   //       |GetNextHandshakeMessage()| and |ParseHandshakeMessage()| to continue
   //       the handshake.
   //
-  //   VERIFICATION_NEEDED:
+  //   kVerificationNeeded:
   //       The handshake is complete, but pending verification of the
   //       authentication string. Clients should use |GetVerificationString()|
   //       to get the verification string and use out-of-band methods to
   //       authenticate the handshake.
   //
-  //   VERIFICATION_IN_PROGRESS:
+  //   kVerificationInProgress:
   //       The handshake is complete, verification string has been generated,
   //       but has not been confirmed. After authenticating the handshake
   //       out-of-band, use |VerifyHandshake()| to mark the handshake as
   //       verified.
   //
-  //   FINISHED:
+  //   kFinished:
   //       The handshake is finished, and the caller can use
   //       |ToConnectionContext()| to produce a |D2DConnectionContextV1|.
   //
-  //   ALREADY_USED:
+  //   kAlreadyUsed:
   //       The hanshake has already been used and should be destroyed.
   //
-  //   ERROR:
+  //   kError:
   //       The handshake produced an error and should be destroyed.
   enum class State {
-    IN_PROGRESS,
-    VERIFICATION_NEEDED,
-    VERIFICATION_IN_PROGRESS,
-    FINISHED,
-    ALREADY_USED,
-    ERROR,
+    kInProgress,
+    kVerificationNeeded,
+    kVerificationInProgress,
+    kFinished,
+    kAlreadyUsed,
+    kError,
   };
 
   // Currently implemented UKEY2 handshake ciphers. Each cipher is a tuple
