@@ -14,6 +14,9 @@
 
 cmake_minimum_required(VERSION 3.0.2)
 
+# Do not install gtest since we are embedding googletest.
+option(INSTALL_GTEST "Do not install gtest since we are embedding googletest" OFF)
+
 project(ukey2)
 
 option(ukey2_USE_LOCAL_PROTOBUF
@@ -48,3 +51,22 @@ endif()
 if (NOT TARGET gtest)
 add_subdirectory(third_party/gtest)
 endif()
+
+install(DIRECTORY src/main/cpp/include/securegcm
+    third_party/secure_message/cpp/include/securemessage
+    DESTINATION include)
+
+# Need to include the generated *.pb.h files otherwise
+# "include "proto/ukey.pb.h" will fail.
+install(DIRECTORY src/main/proto ${CMAKE_BINARY_DIR}/src/main/proto
+  DESTINATION include
+  FILES_MATCHING
+  PATTERN "*.proto"
+  PATTERN "*.pb.h" )
+
+install(TARGETS
+  securemessage proto_securemessage_cc_proto
+  proto_device_to_device_messages_cc_proto
+  proto_securegcm_cc_proto proto_ukey_cc_proto
+  ARCHIVE DESTINATION lib)
+install(TARGETS ukey2 ARCHIVE DESTINATION lib)
