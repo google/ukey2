@@ -337,14 +337,15 @@ cd ukey2
 git submodule update --init --recursive
 ```
 
-# Building and tesging C++ code
+# Building and testing C++ code
 
-## Build
+## Build and install the static libraries files in specified INSTALL directory (e.g. /tmp/ukey2_install).
 ```
 cd <source root>
 mkdir build; cd build
-cmake -Dukey2_USE_LOCAL_PROTOBUF=ON -Dukey2_USE_LOCAL_ABSL=ON ..
+cmake -Dukey2_USE_LOCAL_PROTOBUF=ON -Dukey2_USE_LOCAL_ABSL=ON -DCMAKE_INSTALL_PREFIX=/tmp/ukey2_install ..
 make
+make install
 ```
 ## Running C++ tests
 ```
