@@ -41,7 +41,7 @@ target_link_libraries(ukey2_shell
     securemessage
     ukey2
     absl::base
-    absl::container
+    absl::fixed_array
     absl::flags
     absl::flags_parse
 )
