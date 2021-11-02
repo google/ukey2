@@ -9,9 +9,9 @@ Ported from Java to C++ by Tim Song (tengs@google.com)
 
 **Design reviewers:** Thai Duong, Bruno Blanchet, Martin Abadi, and Bo Wang
 
-**Implementation reviewer**: Thai Duong
+**Implementation reviewer**: Thai Duong, Suet-Fei Li (suetfei@google.com)
 
-**Last Updated:** roughly in September 2016
+**Last Updated:** roughly in November 2021
 
 
 
