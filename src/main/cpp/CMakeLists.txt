@@ -14,4 +14,8 @@
 
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/include)
 add_subdirectory(src/securegcm)
-add_subdirectory(test/securegcm)
+
+if (NOT BYPASS_TESTING)
+  add_subdirectory(test/securegcm)
+endif()
+
