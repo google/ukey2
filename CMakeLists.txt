@@ -24,7 +24,10 @@ option(ukey2_USE_LOCAL_PROTOBUF
 
 option(ukey2_USE_LOCAL_ABSL
        "Use local copy of abseil-cpp library" OFF)
-
+       
+option(BYPASS_TESTING
+       "Do not build or run tests" OFF)
+       
 include(cmake/proto_defs.cmake)
 include(cmake/local_build_setup.cmake)
 
@@ -48,8 +51,11 @@ add_subdirectory(src/main)
 if (NOT TARGET securemessage)
 add_subdirectory(third_party/secure_message)
 endif()
-if (NOT TARGET gtest)
-add_subdirectory(third_party/gtest)
+
+if (NOT BYPASS_TESTING)
+  if (NOT TARGET gtest)
+    add_subdirectory(third_party/gtest)
+   endif()
 endif()
 
 install(DIRECTORY src/main/cpp/include/securegcm
