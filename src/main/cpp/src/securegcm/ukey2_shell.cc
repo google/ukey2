@@ -39,20 +39,12 @@
 #include <iostream>
 #include <memory>
 
+#include <getopt.h>
+
 #include "securegcm/ukey2_handshake.h"
-#include "absl/container/fixed_array.h"
-#include "absl/flags/flag.h"
-#include "absl/flags/parse.h"
 
 #define LOG(ERROR) std::cerr
 #define CHECK_EQ(a, b) do { if ((a) != (b)) abort(); } while(0)
-
-ABSL_FLAG(
-    int, verification_string_length, 32,
-    "The length in bytes of the verification string. Must be a value between 1"
-    "and 32.");
-ABSL_FLAG(string, mode, "initiator",
-          "The mode to run as: one of [initiator, responder]");
 
 namespace securegcm {
 
@@ -86,10 +78,10 @@ string ReadFrame() {
   length |= static_cast<uint32_t>(length_data[3]) << (0 * 8);
 
   // Read |length| bytes from the stream.
-  absl::FixedArray<char> buffer(length);
-  CHECK_EQ(length, fread(buffer.data(), 1, length, stdin));
+  std::unique_ptr<char[]> buffer(new char[length]);
+  CHECK_EQ(length, fread(buffer.get(), 1, length, stdin));
 
-  return string(buffer.data(), length);
+  return string(buffer.get(), length);
 }
 
 }  // namespace
@@ -271,11 +263,54 @@ bool UKey2Shell::RunAsResponder() {
 
 }  // namespace securegcm
 
-int main(int argc, char** argv) {
-  absl::ParseCommandLine(argc, argv);
+static void printUsage(char* name) {
+  std::string exec_name(name);
+  std::string usage(
 
-  const int verification_string_length =
-      absl::GetFlag(FLAGS_verification_string_length);
+      "ICACHE is a command-line based wrapper, exercising the\n"
+      "UKey2Handshake class. Its main use is to be run in a Java test, testing the\n"
+      "compatibility of the Java and C++ implementations.\n"
+      "\n"
+      "This program can be run in two modes, initiator or responder (default is\n"
+      "initiator):\n"
+      "  ukey2_shell --mode=initiator --verification_string_length=32\n"
+      "  ukey2_shell --mode=responder --verification_string_length=32\n"
+      );
+  const std::string from("ICACHE");
+  for (size_t pos = usage.find(from); pos != std::string::npos; pos = usage.find(from, pos)) {
+    usage.replace(pos, from.length(), exec_name);
+  }
+  printf("%s", usage.c_str());
+}
+
+int main(int argc, char** argv) {
+  static constexpr const char* OPTSTR = "ha:";
+  static const struct option OPTIONS[] = {
+      { "help",                       no_argument, 0, 'h' },
+      { "mode",                       required_argument, 0, 'm' },
+      { "verification_string_length", required_argument, 0, 'l' },
+      { 0, 0, 0, 0 }  // termination of the option list
+  };
+  int opt;
+  int option_index = 0;
+  int verification_string_length = 32;
+  string mode = "initiator";
+
+  while ((opt = getopt_long(argc, argv, OPTSTR, OPTIONS, &option_index)) >= 0) {
+    switch (opt) {
+      default:
+      case 'h':
+        printUsage(argv[0]);
+        return 0;
+      case 'l':
+        verification_string_length = atoi(optarg);
+        break;
+      case 'm':
+        mode = optarg;
+        break;
+    }
+  }
+
   if (verification_string_length < 1 || verification_string_length > 32) {
     LOG(ERROR) << "Invalid flag value, verification_string_length: "
                << verification_string_length;
@@ -284,7 +319,6 @@ int main(int argc, char** argv) {
 
   securegcm::UKey2Shell shell(verification_string_length);
   int exit_code = 0;
-  const string mode = absl::GetFlag(FLAGS_mode);
   if (mode == "initiator") {
     exit_code = !shell.RunAsInitiator();
   } else if (mode == "responder") {
