@@ -12,19 +12,18 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-cmake_minimum_required(VERSION 3.0.2)
+cmake_minimum_required(VERSION 3.1)
 
 # Do not install gtest since we are embedding googletest.
 option(INSTALL_GTEST "Do not install gtest since we are embedding googletest" OFF)
 
 project(ukey2)
 
+set(CMAKE_CXX_STANDARD 11)
+
 option(ukey2_USE_LOCAL_PROTOBUF
        "Use local copy of protobuf library and compiler" OFF)
 
-option(ukey2_USE_LOCAL_ABSL
-       "Use local copy of abseil-cpp library" OFF)
-       
 option(BYPASS_TESTING
        "Do not build or run tests" OFF)
        
@@ -33,14 +32,6 @@ include(cmake/local_build_setup.cmake)
 
 if (ukey2_USE_LOCAL_PROTOBUF)
   include(cmake/local_build_protobuf.cmake)
-endif()
-
-if (ukey2_USE_LOCAL_ABSL)
-  if (NOT TARGET absl::base)
-    add_subdirectory(third_party/absl)
-  endif()
-else()
-  find_package(absl REQUIRED)
 endif()
 
 find_package(Protobuf REQUIRED)

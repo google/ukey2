@@ -343,7 +343,7 @@ git submodule update --init --recursive
 ```
 cd <source root>
 mkdir build; cd build
-cmake -Dukey2_USE_LOCAL_PROTOBUF=ON -Dukey2_USE_LOCAL_ABSL=ON -DCMAKE_INSTALL_PREFIX=/tmp/ukey2_install ..
+cmake -Dukey2_USE_LOCAL_PROTOBUF=ON -DCMAKE_INSTALL_PREFIX=/tmp/ukey2_install ..
 make
 make install
 ```

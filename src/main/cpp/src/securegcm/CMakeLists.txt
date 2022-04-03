@@ -40,8 +40,4 @@ target_link_libraries(ukey2_shell
   PUBLIC
     securemessage
     ukey2
-    absl::base
-    absl::fixed_array
-    absl::flags
-    absl::flags_parse
 )
