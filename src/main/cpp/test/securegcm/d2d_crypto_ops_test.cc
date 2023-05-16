@@ -12,11 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "securegcm/d2d_crypto_ops.h"
+#include "src/main/cpp/include/securegcm/d2d_crypto_ops.h"
 
 #include "gtest/gtest.h"
-#include "securemessage/crypto_ops.h"
-#include "securemessage/secure_message_builder.h"
+#include "src/securemessage/include/securemessage/crypto_ops.h"
+#include "src/securemessage/include/securemessage/secure_message_builder.h"
 
 namespace securegcm {
 

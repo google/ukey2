@@ -164,12 +164,12 @@ Upon receiving the `ClientInit` message, the server should:
 
 
 1.  Deserialize the protobuf; send an `Alert.BAD_MESSAGE` message if deserialization fails.
-1.  Verify that `message_type == Type.CLIENT_INIT`; send an `Alert.BAD_MESSAGE_TYPE` message if mismatch occurs.
-1.  Deserialize `message_data` as a `ClientInit` message; send an `Alert.BAD_MESSAGE_DATA` message if deserialization fails.
-1.  Check that `version == 1`; send `Alert.BAD_VERSION` message if mismatch.
-1.  Check that `random` is exactly 32 bytes; send `Alert.BAD_RANDOM` message if not.
-1.  Check to see if any of the `handshake_cipher` in `cipher_commitment` are acceptable. Servers should select the first `handshake_cipher` that it finds acceptable to support clients signaling deprecated but supported HandshakeCiphers. If no `handshake_cipher` is acceptable (or there are no HandshakeCiphers in the message), the server sends an `Alert.BAD_HANDSHAKE_CIPHER` message.
-1.  Checks that `next_protocol` contains a protocol that the server supports.  Send an `Alert.BAD_NEXT_PROTOCOL` message if not.
+2.  Verify that `message_type == Type.CLIENT_INIT`; send an `Alert.BAD_MESSAGE_TYPE` message if mismatch occurs.
+3.  Deserialize `message_data` as a `ClientInit` message; send an `Alert.BAD_MESSAGE_DATA` message if deserialization fails.
+4.  Check that `version == 1`; send `Alert.BAD_VERSION` message if mismatch.
+5.  Check that `random` is exactly 32 bytes; send `Alert.BAD_RANDOM` message if not.
+6.  Check to see if any of the `handshake_cipher` in `cipher_commitment` are acceptable. Servers should select the first `handshake_cipher` that it finds acceptable to support clients signaling deprecated but supported HandshakeCiphers. If no `handshake_cipher` is acceptable (or there are no HandshakeCiphers in the message), the server sends an `Alert.BAD_HANDSHAKE_CIPHER` message.
+7.  Checks that `next_protocol` contains a protocol that the server supports.  Send an `Alert.BAD_NEXT_PROTOCOL` message if not.
 
 If no alerts have been sent, the server replies with the `ServerInit` message.
 
@@ -202,13 +202,13 @@ When a client receives a `ServerInit` after having sent a `ClientInit`, it perfo
 
 
 1.  Deserialize the protobuf; send an `Alert.BAD_MESSAGE` message if deserialization fails.
-1.  Verify that `message_type == Type.SERVER_INIT`; send an `Alert.BAD_MESSAGE_TYPE` message if mismatch occurs.
-1.  Deserialize `message_data` as a `ServerInit` message; send an `Alert.BAD_MESSAGE_DATA` message if deserialization fails.
-1.  Check that `version == 1`; send `Alert.BAD_VERSION` message if mismatch.
-1.  Check that `random` is exactly 32 bytes; send `Alert.BAD_RANDOM` message if not.
-1.  Check that `handshake_cipher` matches a handshake cipher that was sent in
+2.  Verify that `message_type == Type.SERVER_INIT`; send an `Alert.BAD_MESSAGE_TYPE` message if mismatch occurs.
+3.  Deserialize `message_data` as a `ServerInit` message; send an `Alert.BAD_MESSAGE_DATA` message if deserialization fails.
+4.  Check that `version == 1`; send `Alert.BAD_VERSION` message if mismatch.
+5.  Check that `random` is exactly 32 bytes; send `Alert.BAD_RANDOM` message if not.
+6.  Check that `handshake_cipher` matches a handshake cipher that was sent in
 `ClientInit.cipher_commitments`. If not, send an `Alert.BAD_HANDSHAKECIPHER` message.
-1.  Check that `public_key` parses into a correct public key structure.  If not, send an `Alert.BAD_PUBLIC_KEY` message.
+7.  Check that `public_key` parses into a correct public key structure.  If not, send an `Alert.BAD_PUBLIC_KEY` message.
 
 If no alerts have been sent, the client replies with the `ClientFinished` message.  After sending
 the `ClientFinished` message, the Client considers the handshake complete.
@@ -242,10 +242,10 @@ following actions:
 
 
 1.  Deserialize the protobuf; terminate the connection if deserialization fails.
-1.  Verify that `message_type == Type.CLIENT_FINISHED`; terminate the connection if mismatch occurs.
-1.  Verify that the hash of the `ClientFinished` matches the expected commitment for the chosen `handshake_cipher` from `ClientInit`.  Terminate the connection if the expected match fails.
-1.  Deserialize `message_data` as a `ClientFinished` message; terminate the connection if deserialization fails.
-1.  Check that `public_key` parses into a correct public key structure.  If not, terminate the connection.
+2.  Verify that `message_type == Type.CLIENT_FINISHED`; terminate the connection if mismatch occurs.
+3.  Verify that the hash of the `ClientFinished` matches the expected commitment for the chosen `handshake_cipher` from `ClientInit`.  Terminate the connection if the expected match fails.
+4.  Deserialize `message_data` as a `ClientFinished` message; terminate the connection if deserialization fails.
+5.  Check that `public_key` parses into a correct public key structure.  If not, terminate the connection.
 
 Note that because the client is not expecting a response, any error results in connection termination.
 
@@ -364,22 +364,22 @@ path to the artifact, and expects tests to be run from <source root> as follows:
 Pre-reqs: gradle
 
 1. Create gradle wrapper for a specific gradle version.
-This project was built with Gradle-6.1.1.
+This project was built with Gradle-7.5.1.
 If you have an incompatible version of gradle it is recommended that
 you setup gradle wrapper first.
 1.1. The simplest is to run
 ```
 cd <source root>
-gradle wrapper --gradle-version=6.1.1
+gradle wrapper --gradle-version=7.5.1
 
 ```
 
 1.2. If this fails, this is likely because current gradle version is unable to parse the build.gradle
 file. In this case, create an empty directory outside your project tree, and create a wrapper there.
 ```
-mkdir -p $HOME/scratch/gradle-wrapper-611
-cd $HOME/scratch/gradle-wrapper-611
-gradle wrapper --gradle-version=6.1.1
+mkdir -p $HOME/scratch/gradle-wrapper-751
+cd $HOME/scratch/gradle-wrapper-751
+gradle wrapper --gradle-version=7.5.1
 cp -a gradle gradlew gradlew.bat <source root>
 ```
 

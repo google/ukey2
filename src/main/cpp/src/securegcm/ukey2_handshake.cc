@@ -12,12 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "securegcm/ukey2_handshake.h"
+#include "src/main/cpp/include/securegcm/ukey2_handshake.h"
 
 #include <sstream>
 
-#include "securegcm/d2d_crypto_ops.h"
-#include "securemessage/public_key_proto_util.h"
+#include "src/main/cpp/include/securegcm/d2d_crypto_ops.h"
+#include "src/securemessage/include/securemessage/public_key_proto_util.h"
 
 namespace securegcm {
 

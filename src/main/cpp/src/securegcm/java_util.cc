@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "securegcm/java_util.h"
+#include "src/main/cpp/include/securegcm/java_util.h"
 
 #include <cstring>
 

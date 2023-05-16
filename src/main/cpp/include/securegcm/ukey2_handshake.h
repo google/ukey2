@@ -18,9 +18,9 @@
 #include <map>
 #include <memory>
 
-#include "proto/ukey.pb.h"
-#include "securegcm/d2d_connection_context_v1.h"
-#include "securemessage/crypto_ops.h"
+#include "src/main/proto/ukey.pb.h"
+#include "src/main/cpp/include/securegcm/d2d_connection_context_v1.h"
+#include "src/securemessage/include/securemessage/crypto_ops.h"
 
 namespace securegcm {
 

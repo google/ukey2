@@ -24,17 +24,17 @@ buildscript {
     mavenCentral()
   }
   dependencies {
-    classpath 'com.google.protobuf:protobuf-gradle-plugin:0.8.12'
+    classpath 'com.google.protobuf:protobuf-gradle-plugin:0.9.0'
   }
 }
 
 dependencies {
-    compile group: 'com.google.truth.extensions', name: 'truth-java8-extension', version: '0.41'
-    testCompile group: 'com.google.guava', name: 'guava-testlib', version: '29.0-jre'
+    implementation group: 'com.google.truth.extensions', name: 'truth-java8-extension', version: '0.41'
+    testImplementation group: 'com.google.guava', name: 'guava-testlib', version: '29.0-jre'
     testImplementation 'junit:junit:4.13'
-    compile  "com.google.code.findbugs:jsr305:3.0.0"
-    compile "com.google.protobuf:protobuf-java:3.8.0"
-    compile "com.google.guava:guava:19.0"
+    implementation "com.google.code.findbugs:jsr305:3.0.0"
+    implementation "com.google.protobuf:protobuf-java:3.19.3"
+    implementation "com.google.guava:guava:19.0"
 }
 
 sourceSets {
@@ -56,4 +56,9 @@ test {
     useJUnit()
 
     maxHeapSize = '1G'
+
+    testLogging {
+        outputs.upToDateWhen {false}
+        showStandardStreams = true
+    }
 }
