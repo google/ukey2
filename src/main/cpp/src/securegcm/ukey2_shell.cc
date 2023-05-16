@@ -39,7 +39,7 @@
 #include <iostream>
 #include <memory>
 
-#include "securegcm/ukey2_handshake.h"
+#include "src/main/cpp/include/securegcm/ukey2_handshake.h"
 #include "absl/container/fixed_array.h"
 #include "absl/flags/flag.h"
 #include "absl/flags/parse.h"

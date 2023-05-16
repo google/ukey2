@@ -12,17 +12,17 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "securegcm/d2d_connection_context_v1.h"
+#include "src/main/cpp/include/securegcm/d2d_connection_context_v1.h"
 
 #include <limits>
 #include <sstream>
 
-#include "proto/device_to_device_messages.pb.h"
-#include "proto/securegcm.pb.h"
-#include "securegcm/d2d_crypto_ops.h"
-#include "securegcm/java_util.h"
-#include "securemessage/secure_message_builder.h"
-#include "securemessage/util.h"
+#include "src/main/proto/device_to_device_messages.pb.h"
+#include "src/main/proto/securegcm.pb.h"
+#include "src/main/cpp/include/securegcm/d2d_crypto_ops.h"
+#include "src/main/cpp/include/securegcm/java_util.h"
+#include "src/securemessage/include/securemessage/secure_message_builder.h"
+#include "src/securemessage/include/securemessage/util.h"
 
 namespace securegcm {
 

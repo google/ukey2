@@ -16,7 +16,7 @@
 #ifndef SECURITY_CRYPTAUTH_LIB_SECUREGCM_JAVA_UTIL_H_
 #define SECURITY_CRYPTAUTH_LIB_SECUREGCM_JAVA_UTIL_H_
 
-#include "securemessage/byte_buffer.h"
+#include "src/securemessage/include/securemessage/byte_buffer.h"
 
 namespace securegcm {
 namespace java_util {
