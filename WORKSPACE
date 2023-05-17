@@ -23,15 +23,6 @@ http_archive(
 )
 
 http_archive(
-    name = "com_google_securemessage",
-    strip_prefix = "securemessage-master",
-    urls = ["https://github.com/anayw2001/securemessage/archive/master.zip"],
-)
-
-load("@com_google_securemessage//:deps.bzl", "securemessage_deps")
-securemessage_deps()
-
-http_archive(
     name = "com_google_absl",
     strip_prefix = "abseil-cpp-master",
     urls = ["https://github.com/abseil/abseil-cpp/archive/master.zip"],
