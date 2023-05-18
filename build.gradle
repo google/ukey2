@@ -13,8 +13,8 @@
 // limitations under the License.
 
 apply plugin: 'java'
-apply plugin: 'com.google.protobuf'
 apply plugin: 'me.champeau.jmh'
+apply plugin: 'com.google.protobuf'
 
 repositories {
     mavenCentral()
@@ -36,7 +36,7 @@ dependencies {
     testImplementation group: 'com.google.guava', name: 'guava-testlib', version: '29.0-jre'
     testImplementation 'junit:junit:4.13'
     implementation "com.google.code.findbugs:jsr305:3.0.0"
-    implementation "com.google.protobuf:protobuf-java:3.19.3"
+    implementation "com.google.protobuf:protobuf-java:3.21.12"
     implementation "com.google.guava:guava:19.0"
 }
 
