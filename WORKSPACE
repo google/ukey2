@@ -27,3 +27,11 @@ http_archive(
     strip_prefix = "abseil-cpp-master",
     urls = ["https://github.com/abseil/abseil-cpp/archive/master.zip"],
 )
+
+load("@bazel_tools//tools/build_defs/repo:git.bzl", "git_repository")
+
+git_repository(
+    name = "boringssl",
+    branch = "master-with-bazel",
+    remote = "https://boringssl.googlesource.com/boringssl",
+)
