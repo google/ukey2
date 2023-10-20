@@ -16,7 +16,7 @@ syntax = "proto2";
 
 package securegcm;
 
-import "src/main/proto/securemessage.proto";
+import "securemessage.proto";
 
 option optimize_for = LITE_RUNTIME;
 option java_package = "com.google.security.cryptauth.lib.securegcm";
