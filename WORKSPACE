@@ -2,14 +2,14 @@ load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
 
 http_archive(
     name = "com_google_protobuf",
-    strip_prefix = "protobuf-3.22.5",
-    urls = ["https://github.com/protocolbuffers/protobuf/archive/v3.22.5.tar.gz"],
+    strip_prefix = "protobuf-3.24.4",
+    urls = ["https://github.com/protocolbuffers/protobuf/archive/v3.24.4.tar.gz"],
 )
 
 http_archive(
     name = "com_google_protobuf_cc",
-    strip_prefix = "protobuf-3.22.5",
-    urls = ["https://github.com/protocolbuffers/protobuf/archive/v3.22.5.tar.gz"],
+    strip_prefix = "protobuf-3.24.4",
+    urls = ["https://github.com/protocolbuffers/protobuf/archive/v3.24.4.tar.gz"],
 )
 
 load("@com_google_protobuf//:protobuf_deps.bzl", "protobuf_deps")
