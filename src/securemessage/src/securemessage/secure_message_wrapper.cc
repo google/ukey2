@@ -16,7 +16,7 @@
 
 #include "src/securemessage/include/securemessage/secure_message_wrapper.h"
 
-#include "src/main/proto/securemessage.pb.h"
+#include "securemessage.pb.h"
 #include "src/securemessage/include/securemessage/util.h"
 
 namespace securemessage {

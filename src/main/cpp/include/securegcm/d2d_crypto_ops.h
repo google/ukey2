@@ -18,7 +18,7 @@
 #include <memory>
 #include <string>
 
-#include "src/main/proto/securegcm.pb.h"
+#include "securegcm.pb.h"
 #include "src/securemessage/include/securemessage/crypto_ops.h"
 
 namespace securegcm {

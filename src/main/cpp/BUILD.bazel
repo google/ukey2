@@ -11,7 +11,7 @@ cc_library(
         "include",
     ],
     deps = [
-        "//src/main/proto:cc_proto",
+        "//:cc_proto",
         "//src/securemessage:securemessage_common",
         "//src/securemessage:securemessage_cpp_protobuf",
         "//src/securemessage:securemessage_openssl",

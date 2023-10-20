@@ -19,7 +19,7 @@
 
 #include <memory>
 
-#include "src/main/proto/securemessage.pb.h"
+#include "securemessage.pb.h"
 
 #include "src/securemessage/include/securemessage/common.h"
 #include "src/securemessage/include/securemessage/crypto_ops.h"
