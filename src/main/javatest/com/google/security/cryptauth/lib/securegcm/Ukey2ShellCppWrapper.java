@@ -19,6 +19,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.io.File;
 import java.lang.ProcessBuilder.Redirect;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
@@ -50,6 +51,7 @@ import javax.annotation.Nullable;
 public class Ukey2ShellCppWrapper {
   // The path the the ukey2_shell binary.
   private static final String BINARY_PATH = "build/src/main/cpp/src/securegcm/ukey2_shell";
+  private static final String BINARY_PATH_BAZEL = "bazel-bin/src/main/cpp/ukey2_shell";
 
   // The time to wait before timing out a read or write operation to the shell.
   @SuppressWarnings("GoodTime") // TODO(b/147378611): store a java.time.Duration instead
@@ -90,8 +92,18 @@ public class Ukey2ShellCppWrapper {
     String modeArg = "--mode=" + getModeString();
     String verificationStringLengthArg = "--verification_string_length=" + verificationStringLength;
 
-    final ProcessBuilder builder =
-        new ProcessBuilder(BINARY_PATH, modeArg, verificationStringLengthArg);
+    String binaryPath;
+    if (new File(BINARY_PATH).exists()){
+      binaryPath = BINARY_PATH;
+    } else if (new File(BINARY_PATH_BAZEL).exists()) {
+      binaryPath = BINARY_PATH_BAZEL;
+    } else {
+      throw new IllegalStateException("Unable to find ukey2_shell binary in "+BINARY_PATH);
+    }
+
+
+    ProcessBuilder builder =
+        new ProcessBuilder(binaryPath, modeArg, verificationStringLengthArg);
 
     // Merge the shell's stderr with the stderr of the current process.
     builder.redirectError(Redirect.INHERIT);
@@ -316,7 +328,7 @@ public class Ukey2ShellCppWrapper {
    * @param command The command to send.
    * @param argument The argument of the command. Can be null.
    * @return the expression that can be sent to the shell.
-   * @throws IOException.
+   * @throws IOException
    */
   private byte[] createExpression(String command, @Nullable byte[] argument) throws IOException {
     ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
