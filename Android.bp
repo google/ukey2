@@ -13,13 +13,13 @@
 // limitations under the License.
 
 // Android build file for building the library in AOSP
-// https://android.googlesource.com/platform/external/ukey2
+// https://android.googlesource.com/platform/external/ukey
 
 java_library {
-  name: "ukey2",
+  name: "ukey",
   proto: {
     type: "lite",
-    include_dirs: ["external/ukey2/src/main/proto"],
+    include_dirs: ["external/ukey/src/main/proto"],
   },
   srcs: [
     "**/*.proto",
