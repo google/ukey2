@@ -341,16 +341,11 @@ git submodule update --init --recursive
 
 ## Build and install the static libraries files in specified INSTALL directory (e.g. /tmp/ukey2_install).
 ```
-cd <source root>
-mkdir build; cd build
-cmake -Dukey2_USE_LOCAL_PROTOBUF=ON -Dukey2_USE_LOCAL_ABSL=ON -DCMAKE_INSTALL_PREFIX=/tmp/ukey2_install ..
-make
-make install
+bazel build //src/main/cpp:ukey2_shell
 ```
 ## Running C++ tests
 ```
-cd <source root>/build
-ctest -V
+bazel test //src/main/cpp:cpp_tests
 ```
 
 # Buillding Java library and running Java Tests
