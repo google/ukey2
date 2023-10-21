@@ -17,8 +17,8 @@
 #include <limits>
 #include <sstream>
 
-#include "src/main/proto/device_to_device_messages.pb.h"
-#include "src/main/proto/securegcm.pb.h"
+#include "device_to_device_messages.pb.h"
+#include "securegcm.pb.h"
 #include "src/main/cpp/include/securegcm/d2d_crypto_ops.h"
 #include "src/main/cpp/include/securegcm/java_util.h"
 #include "src/securemessage/include/securemessage/secure_message_builder.h"

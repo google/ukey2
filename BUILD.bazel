@@ -1,0 +1,33 @@
+load("@rules_cc//cc:defs.bzl", "cc_proto_library")
+
+package(default_visibility = ["//visibility:public"])
+
+alias(
+    name = "ukey2",
+    actual = "//src/main/cpp",
+)
+
+# Define the proto rule at the root level, instead of under src/main/proto,
+# to resolve the import root dir difference between bazel and gradle.
+# Specifically, proto-gradle-plugin considers src/main/proto as the root, so
+# the proto `import` path should be relative. Whereas bazel considers the top
+# level as the root, so the import should be absolute (or relative to the top).
+#
+# The solution is to update the basel side by defining the proto rule at the
+# top level, then strip_import_prefix such that the protos are relative.
+proto_library(
+    name = "proto",
+    srcs = [
+        "src/main/proto/device_to_device_messages.proto",
+        "src/main/proto/securegcm.proto",
+        "src/main/proto/securemessage.proto",
+        "src/main/proto/ukey.proto",
+    ],
+    strip_import_prefix = 'src/main/proto/'
+)
+
+cc_proto_library(
+    name = "cc_proto",
+    deps = [":proto"],
+    visibility = ["//src:__subpackages__"],
+)
