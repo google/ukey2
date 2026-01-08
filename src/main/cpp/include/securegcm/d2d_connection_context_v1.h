@@ -18,6 +18,7 @@
 #include <memory>
 #include <string>
 
+#include "absl/strings/string_view.h"
 #include "src/securemessage/include/securemessage/crypto_ops.h"
 
 namespace securegcm {
@@ -40,6 +41,7 @@ class D2DConnectionContextV1 {
   //
   // On failure, nullptr is returned.
   std::unique_ptr<string> EncodeMessageToPeer(const string& payload);
+  std::unique_ptr<string> EncodeMessageToPeer(absl::string_view payload);
 
   // Once the initiator and responder have negotiated a secret key, use this
   // method to decrypt and verify a |message| received from the other device.

@@ -17,6 +17,7 @@
 #include <limits>
 #include <sstream>
 
+#include "absl/strings/string_view.h"
 #include "device_to_device_messages.pb.h"
 #include "securegcm.pb.h"
 #include "src/main/cpp/include/securegcm/d2d_crypto_ops.h"
@@ -66,7 +67,7 @@ const int kSavedSessionLength = kDecodeKeyStart + kAesKeyLength;
 
 // Convenience function to creates a DeviceToDeviceMessage proto with |payload|
 // and |sequence_number|.
-DeviceToDeviceMessage CreateDeviceToDeviceMessage(const std::string& payload,
+DeviceToDeviceMessage CreateDeviceToDeviceMessage(absl::string_view payload,
                                                   uint32_t sequence_number) {
   DeviceToDeviceMessage device_to_device_message;
   device_to_device_message.set_sequence_number(sequence_number);
@@ -98,6 +99,11 @@ D2DConnectionContextV1::D2DConnectionContextV1(
 
 std::unique_ptr<std::string> D2DConnectionContextV1::EncodeMessageToPeer(
     const std::string& payload) {
+  return EncodeMessageToPeer(absl::string_view(payload));
+}
+
+std::unique_ptr<std::string> D2DConnectionContextV1::EncodeMessageToPeer(
+    absl::string_view payload) {
   encode_sequence_number_++;
   const DeviceToDeviceMessage message =
       CreateDeviceToDeviceMessage(payload, encode_sequence_number_);

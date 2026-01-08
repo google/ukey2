@@ -12,6 +12,7 @@ cc_library(
     ],
     deps = [
         "//:cc_proto",
+        "@com_google_absl//absl/strings:string_view",
         "//src/securemessage:securemessage_common",
         "//src/securemessage:securemessage_cpp_protobuf",
         "//src/securemessage:securemessage_openssl",
